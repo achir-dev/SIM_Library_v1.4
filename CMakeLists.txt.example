@@ -1,0 +1,87 @@
+# CMakeLists.txt.example
+# Example CMake configuration for using SIM Library
+# Copy this file to your project and rename to CMakeLists.txt
+
+cmake_minimum_required(VERSION 3.14)
+project(my_sim_project VERSION 1.0.0 LANGUAGES CXX)
+
+# C++17 required
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# =============================================================================
+# SIM LIBRARY
+# =============================================================================
+
+# Path to sim_library (adjust as needed)
+set(SIM_LIBRARY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/sim_library")
+
+# Build SIM library with both SIM and SAHM
+add_library(sim_library SHARED
+    ${SIM_LIBRARY_DIR}/src/sim_transport.cpp
+    ${SIM_LIBRARY_DIR}/src/sahm.cpp
+)
+
+target_include_directories(sim_library PUBLIC
+    ${SIM_LIBRARY_DIR}/include
+)
+
+target_link_libraries(sim_library
+    rt        # POSIX real-time (shm_open, etc.)
+    pthread   # Threading
+)
+
+# Compiler optimizations for release
+target_compile_options(sim_library PRIVATE
+    $<$<CONFIG:Release>:-O3 -march=native>
+)
+
+# =============================================================================
+# EXAMPLES
+# =============================================================================
+
+# SIM Examples
+add_executable(simple_writer
+    ${SIM_LIBRARY_DIR}/examples/simple_writer.cpp
+)
+target_link_libraries(simple_writer sim_library)
+
+add_executable(simple_reader
+    ${SIM_LIBRARY_DIR}/examples/simple_reader.cpp
+)
+target_link_libraries(simple_reader sim_library)
+
+# SAHM Examples
+add_executable(sahm_writer
+    ${SIM_LIBRARY_DIR}/examples/sahm_writer.cpp
+)
+target_link_libraries(sahm_writer sim_library)
+
+add_executable(sahm_reader
+    ${SIM_LIBRARY_DIR}/examples/sahm_reader.cpp
+)
+target_link_libraries(sahm_reader sim_library)
+
+# =============================================================================
+# YOUR APPLICATION
+# =============================================================================
+
+# Example: Your own application using SIM
+# add_executable(my_publisher src/my_publisher.cpp)
+# target_link_libraries(my_publisher sim_library)
+
+# add_executable(my_subscriber src/my_subscriber.cpp)
+# target_link_libraries(my_subscriber sim_library)
+
+# =============================================================================
+# INSTALL (optional)
+# =============================================================================
+
+install(TARGETS sim_library
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+install(DIRECTORY ${SIM_LIBRARY_DIR}/include/
+    DESTINATION include
+)
