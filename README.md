@@ -34,8 +34,8 @@ All transports are based on **SIM (Sensor-In-Memory)** architecture with differe
 | **CASIR** | 0.0008 | 0.0010 | 0.0059 | 0.067 | 0.53 | 1.04 | 2.17 | **4.49** |
 | **BARQ** | 0.0007 | 0.0012 | 0.0064 | 0.059 | 0.54 | 1.08 | 2.26 | 5.19 |
 | **SIM** | 0.0010 | 0.0033 | 0.0160 | 0.136 | 0.82 | 1.65 | 3.58 | 9.45 |
-| ROS2 Std | 0.61 | 0.63 | 0.73 | 1.56 | 4.76 | 8.78 | 17.7 | 360 |
-| ROS2 Loan | 0.59 | 0.61 | 0.72 | 1.34 | 4.93 | 9.26 | 16.2 | 544 |
+| ROS2 Std | 0.61 | 0.63 | 0.73 | 1.56 | 4.76 | 8.78 | 17.7 | / |
+| ROS2 Loan | 0.59 | 0.61 | 0.72 | 1.34 | 4.93 | 9.26 | 16.2 | / |
 
 **50MB: CASIR 80-120x faster than ROS2!**
 
@@ -49,7 +49,7 @@ All transports are based on **SIM (Sensor-In-Memory)** architecture with differe
 | **100 KB** | **CASIR/BARQ** | 6 μs | ~120x faster |
 | **1 MB** | **BARQ** | 59 μs | ~23x faster |
 | **5-20 MB** | **CASIR** | 0.5-2.2 ms | ~8x faster |
-| **50 MB** | **CASIR** | 4.5 ms | ~80-120x faster |
+| **50 MB** | **CASIR** | 4.5 ms | / |
 
 ---
 
