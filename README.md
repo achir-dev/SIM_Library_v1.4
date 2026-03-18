@@ -225,7 +225,7 @@ const void* ptr = reader.readZeroCopy(sz);
 | **Minimum latency** | BARQ |
 | **Small data (≤10KB)** | CASIR |
 | **Large data (≥20MB)** | BARQ |
-| **Medium data (5-10MB)** | SAHM |
+| **Medium data (5-10MB)** | BARQ |
 | **Multiple readers** | SAHM |
 | **History/replay** | SAHM |
 | **Simplest API** | SIM |
