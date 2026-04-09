@@ -286,12 +286,7 @@ Reader::Reader(const std::string& name, size_t max_size)
 }
 
 Reader::~Reader() {
-    if (ptr_ && ptr_ != MAP_FAILED) {
-        munmap(ptr_, shm_size_);
-    }
-    if (fd_ >= 0) {
-        close(fd_);
-    }
+    destroy();
 }
 
 bool Reader::init() {
@@ -390,6 +385,21 @@ bool Reader::isWriterAlive(uint32_t timeout_ms) const {
     int64_t diff_ms = (now - hb) / 1000000;
     
     return diff_ms < static_cast<int64_t>(timeout_ms);
+}
+
+void Reader::destroy(){
+    if(ptr_ && ptr_ != MAP_FAILED){
+        munmap(ptr_, shm_size_);
+        ptr_ = nullptr;
+    }
+    if(fd_ >= 0){
+        close(fd_);
+        fd_ = -1;
+    }
+    header_ = nullptr;
+    buffer_[0] = nullptr;
+    buffer_[1] = nullptr;
+    initialized_ = false;
 }
 
 int64_t Reader::nowNs() const {
