@@ -214,6 +214,11 @@ public:
      */
     uint64_t getLastSeq() const { return last_seq_; }
 
+    /**
+     * @brief Clean up
+     */
+    void destroy();
+
 private:
     std::string name_;
     size_t max_size_;
